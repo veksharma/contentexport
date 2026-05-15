@@ -1,0 +1,12 @@
+alfresco:
+  base-url: https://your-alfresco-host
+  username: admin-user
+  password: admin-password
+  root-folder-id: your-website-root-folder-node-id
+
+client-export:
+  base-download-url: https://your-api-host/api/v1/website-content/files
+
+spring:
+  application:
+    name: contentexport
