@@ -1,59 +1,120 @@
 package com.alfresco.contentexport.client;
 
-import com.alfresco.contentexport.dto.AlfrescoChildrenResponse;
-import com.alfresco.contentexport.dto.AlfrescoNode;
-import com.alfresco.contentexport.dto.AlfrescoNodeEntry;
-import com.alfresco.contentexport.dto.AlfrescoNodeResponse;
-import jakarta.annotation.Resource;
+import com.alfresco.contentexport.config.AlfrescoProperties;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriUtils;
+
+import java.nio.charset.StandardCharsets;
 
 @Component
 public class AlfrescoClient {
 
-    private final WebClient webClient;
+    private final RestTemplate restTemplate;
+    private final AlfrescoProperties properties;
 
-    public AlfrescoClient(WebClient alfrescoWebClient) {
-        this.webClient = alfrescoWebClient;
+    public AlfrescoClient(RestTemplate restTemplate, AlfrescoProperties properties) {
+        this.restTemplate = restTemplate;
+        this.properties = properties;
     }
 
-    public AlfrescoChildrenResponse getChildren(String folderId) {
-        return webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/alfresco/api/-default-/public/alfresco/versions/1/nodes/{folderId}/children")
-                        .queryParam("include", "path,properties")
-                        .build(folderId))
-                .retrieve()
-                .bodyToMono(AlfrescoChildrenResponse.class)
-                .block();
+    private HttpHeaders createHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBasicAuth(properties.getUsername(), properties.getPassword());
+        headers.setAccept(MediaType.parseMediaTypes("application/json,text/html,text/plain,*/*"));
+        return headers;
     }
 
-    public AlfrescoNode getNode(String nodeId) {
-        AlfrescoNodeResponse response = webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/alfresco/api/-default-/public/alfresco/versions/1/nodes/{nodeId}")
-                        .queryParam("include", "path,properties")
-                        .build(nodeId))
-                .retrieve()
-                .bodyToMono(AlfrescoNodeResponse.class)
-                .block();
+    public ResponseEntity<String> getNodeMetadata(String nodeId) {
+        String url = properties.getBaseUrl()
+                + "/alfresco/service/api/node/workspace/SpacesStore/"
+                + nodeId;
 
-        return response.getEntry();
+        HttpEntity<Void> entity = new HttpEntity<>(createHeaders());
+
+        return restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                String.class
+        );
     }
 
-    public Resource downloadContent(String nodeId) {
-        return webClient.get()
-                .uri("/alfresco/api/-default-/public/alfresco/versions/1/nodes/{nodeId}/content", nodeId)
-                .retrieve()
-                .bodyToMono(Resource.class)
-                .block();
+    public ResponseEntity<byte[]> getNodeContent(String nodeId) {
+        String url = properties.getBaseUrl()
+                + "/alfresco/service/api/node/content/workspace/SpacesStore/"
+                + nodeId;
+
+        HttpEntity<Void> entity = new HttpEntity<>(createHeaders());
+
+        return restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                byte[].class
+        );
     }
 
-    public String downloadTextContent(String nodeId) {
-        return webClient.get()
-                .uri("/alfresco/api/-default-/public/alfresco/versions/1/nodes/{nodeId}/content", nodeId)
-                .retrieve()
-                .bodyToMono(String.class)
-                .block();
+    public ResponseEntity<String> search(String keyword) {
+        String encodedKeyword = UriUtils.encode(keyword, StandardCharsets.UTF_8);
+
+        String url = properties.getBaseUrl()
+                + "/alfresco/service/api/search/keyword.json?q="
+                + encodedKeyword;
+
+        HttpEntity<Void> entity = new HttpEntity<>(createHeaders());
+
+        return restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                String.class
+        );
+    }
+
+    public ResponseEntity<String> getSites() {
+        String url = properties.getBaseUrl()
+                + "/alfresco/service/api/sites";
+
+        HttpEntity<Void> entity = new HttpEntity<>(createHeaders());
+
+        return restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                String.class
+        );
+    }
+
+    public ResponseEntity<String> getSiteDocumentLibrary(String siteShortName) {
+        String url = properties.getBaseUrl()
+                + "/alfresco/service/slingshot/doclib/doclist/all/site/"
+                + siteShortName
+                + "/documentLibrary";
+
+        HttpEntity<Void> entity = new HttpEntity<>(createHeaders());
+
+        return restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                String.class
+        );
+    }
+
+    public ResponseEntity<String> getFolderChildren(String folderNodeId) {
+        String url = properties.getBaseUrl()
+                + "/alfresco/service/slingshot/doclib/doclist/all/node/workspace/SpacesStore/"
+                + folderNodeId;
+
+        HttpEntity<Void> entity = new HttpEntity<>(createHeaders());
+
+        return restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                String.class
+        );
     }
 }
