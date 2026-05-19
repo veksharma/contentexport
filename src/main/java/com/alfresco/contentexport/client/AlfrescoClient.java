@@ -1,6 +1,7 @@
 package com.alfresco.contentexport.client;
 
 import com.alfresco.contentexport.config.AlfrescoProperties;
+import com.alfresco.contentexport.dto.DocListResponse;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -115,6 +116,21 @@ public class AlfrescoClient {
                 HttpMethod.GET,
                 entity,
                 String.class
+        );
+    }
+
+    public ResponseEntity<DocListResponse> getFolderChildrenAsDocList(String folderNodeId) {
+        String url = properties.getBaseUrl()
+                + "/alfresco/service/slingshot/doclib/doclist/all/node/workspace/SpacesStore/"
+                + folderNodeId;
+
+        HttpEntity<Void> entity = new HttpEntity<>(createHeaders());
+
+        return restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                DocListResponse.class
         );
     }
 }
