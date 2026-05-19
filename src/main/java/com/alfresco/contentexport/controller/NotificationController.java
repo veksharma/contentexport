@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class NotificationController {
 
     public static final String EXCISE = "74394101-0e23-4eed-95e3-b35362f8ea6c";
-
     private final AlfrescoClient alfrescoClient;
 
     public NotificationController(AlfrescoClient alfrescoClient) {
