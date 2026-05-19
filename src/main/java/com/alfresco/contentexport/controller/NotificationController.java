@@ -16,6 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class NotificationController {
 
     public static final String EXCISE = "74394101-0e23-4eed-95e3-b35362f8ea6c";
+    public static final String serviceTax= "e7d4e84a-3fa3-49bf-9d7b-b602bdaa6ab1";
+    public static final String customsFolder= "e17b08af-96f7-4947-9ab7-ddf50f20dcd4";
+    public static final String CGST= "558e42f1-a43a-43c0-9d64-b0c673a03112";
+    public static final String IGST= "c68bba24-baed-47f0-8576-af8fbc22c02a";
+    public static final String UTGST= "91bded29-56f4-42de-9df8-d03e5b222cfb";
+    public static final String compensation= "ac9fc64d-95cb-4768-99bb-742e145ee144";
+    public static final String GSTAT = "fc9142f8-2de1-4803-a691-e014025c6cc4";
+    public static final String SVLDRS= "6b5dbcbc-939f-4ba9-8565-b9c3cb702170";
+    public static final String customsNtcaadri= "52db44ae-f3ad-4d1c-8cb9-1bd9b521404b";
     private final AlfrescoClient alfrescoClient;
 
     public NotificationController(AlfrescoClient alfrescoClient) {
@@ -26,6 +35,96 @@ public class NotificationController {
     public ResponseEntity<DocListShortResponse> getExciseNotifications() {
         ResponseEntity<DocListShortResponse> response =
                 alfrescoClient.getFolderChildrenAsDocList(EXCISE);
+
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .body(response.getBody());
+    }
+
+    @GetMapping("/serviceTax")
+    public ResponseEntity<DocListShortResponse> getServiceTaxNotifications() {
+        ResponseEntity<DocListShortResponse> response =
+                alfrescoClient.getFolderChildrenAsDocList(serviceTax);
+
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .body(response.getBody());
+    }
+
+    @GetMapping("/customsFolder")
+    public ResponseEntity<DocListShortResponse> getCustomsFolderNotifications() {
+        ResponseEntity<DocListShortResponse> response =
+                alfrescoClient.getFolderChildrenAsDocList(customsFolder);
+
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .body(response.getBody());
+    }
+
+    @GetMapping("/cgst")
+    public ResponseEntity<DocListShortResponse> getCgstNotifications() {
+        ResponseEntity<DocListShortResponse> response =
+                alfrescoClient.getFolderChildrenAsDocList(CGST);
+
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .body(response.getBody());
+    }
+
+    @GetMapping("/igst")
+    public ResponseEntity<DocListShortResponse> getIgstNotifications() {
+        ResponseEntity<DocListShortResponse> response =
+                alfrescoClient.getFolderChildrenAsDocList(IGST);
+
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .body(response.getBody());
+    }
+
+    @GetMapping("/utgst")
+    public ResponseEntity<DocListShortResponse> getUtgstNotifications() {
+        ResponseEntity<DocListShortResponse> response =
+                alfrescoClient.getFolderChildrenAsDocList(UTGST);
+
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .body(response.getBody());
+    }
+
+    @GetMapping("/compensation")
+    public ResponseEntity<DocListShortResponse> getCompensationNotifications() {
+        ResponseEntity<DocListShortResponse> response =
+                alfrescoClient.getFolderChildrenAsDocList(compensation);
+
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .body(response.getBody());
+    }
+
+    @GetMapping("/gstat")
+    public ResponseEntity<DocListShortResponse> getGstatNotifications() {
+        ResponseEntity<DocListShortResponse> response =
+                alfrescoClient.getFolderChildrenAsDocList(GSTAT);
+
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .body(response.getBody());
+    }
+
+    @GetMapping("/svldrs")
+    public ResponseEntity<DocListShortResponse> getSvldrsNotifications() {
+        ResponseEntity<DocListShortResponse> response =
+                alfrescoClient.getFolderChildrenAsDocList(SVLDRS);
+
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .body(response.getBody());
+    }
+
+    @GetMapping("/customsNtcaadri")
+    public ResponseEntity<DocListShortResponse> getCustomsNtcaadriNotifications() {
+        ResponseEntity<DocListShortResponse> response =
+                alfrescoClient.getFolderChildrenAsDocList(customsNtcaadri);
 
         return ResponseEntity
                 .status(response.getStatusCode())
