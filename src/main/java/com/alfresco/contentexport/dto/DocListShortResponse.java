@@ -25,6 +25,8 @@ public class DocListShortResponse {
 
     public static class DocListItem {
 
+        private static final String WORKSPACE_STORE_PREFIX = "workspace://SpacesStore/";
+
         private String nodeRef;
         private String type;
         private String mimetype;
@@ -32,15 +34,17 @@ public class DocListShortResponse {
         private String fileName;
         private String title;
         private String size;
-        private String contentUrl;
-        private String webdavUrl;
 
         public String getNodeRef() {
             return nodeRef;
         }
 
         public void setNodeRef(String nodeRef) {
-            this.nodeRef = nodeRef;
+            if (nodeRef != null && nodeRef.startsWith(WORKSPACE_STORE_PREFIX)) {
+                this.nodeRef = nodeRef.substring(WORKSPACE_STORE_PREFIX.length());
+            } else {
+                this.nodeRef = nodeRef;
+            }
         }
 
         public String getType() {
@@ -81,22 +85,6 @@ public class DocListShortResponse {
 
         public void setSize(String size) {
             this.size = size;
-        }
-
-        public String getContentUrl() {
-            return contentUrl;
-        }
-
-        public void setContentUrl(String contentUrl) {
-            this.contentUrl = contentUrl;
-        }
-
-        public String getWebdavUrl() {
-            return webdavUrl;
-        }
-
-        public void setWebdavUrl(String webdavUrl) {
-            this.webdavUrl = webdavUrl;
         }
 
     }
