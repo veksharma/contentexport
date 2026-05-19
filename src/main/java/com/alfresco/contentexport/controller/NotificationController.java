@@ -1,7 +1,7 @@
 package com.alfresco.contentexport.controller;
 
 import com.alfresco.contentexport.client.AlfrescoClient;
-import com.alfresco.contentexport.dto.DocListResponse;
+import com.alfresco.contentexport.dto.DocListShortResponse;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -22,8 +22,8 @@ public class NotificationController {
     }
 
     @GetMapping("/excise")
-    public ResponseEntity<DocListResponse> getExciseNotifications() {
-        ResponseEntity<DocListResponse> response =
+    public ResponseEntity<DocListShortResponse> getExciseNotifications() {
+        ResponseEntity<DocListShortResponse> response =
                 alfrescoClient.getFolderChildrenAsDocList("74394101-0e23-4eed-95e3-b35362f8ea6c");
 
         return ResponseEntity
