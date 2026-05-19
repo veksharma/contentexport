@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/notification")
 public class NotificationController {
 
+    public static final String EXCISE = "74394101-0e23-4eed-95e3-b35362f8ea6c";
     private final AlfrescoClient alfrescoClient;
 
     public NotificationController(AlfrescoClient alfrescoClient) {
@@ -24,7 +25,7 @@ public class NotificationController {
     @GetMapping("/excise")
     public ResponseEntity<DocListShortResponse> getExciseNotifications() {
         ResponseEntity<DocListShortResponse> response =
-                alfrescoClient.getFolderChildrenAsDocList("74394101-0e23-4eed-95e3-b35362f8ea6c");
+                alfrescoClient.getFolderChildrenAsDocList(EXCISE);
 
         return ResponseEntity
                 .status(response.getStatusCode())
