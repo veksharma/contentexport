@@ -30,9 +30,15 @@ public class DocListShortResponse {
         private String nodeRef;
         private String type;
         private String mimetype;
-
         private String fileName;
         private String title;
+        private String description;
+        private String author;
+        private String createdOn;
+        private String createdBy;
+        private String createdByUser;
+        private String modifiedOn;
+        private String modifiedBy;
         private String size;
 
         public String getNodeRef() {
@@ -79,6 +85,48 @@ public class DocListShortResponse {
             this.title = title;
         }
 
+        public String getDescription() {
+            return description;
+        }
+        public void setDescription(String description) {
+            this.description = description;
+        }
+        public String getAuthor() {
+            return author;
+        }
+        public void setAuthor(String author) {
+            this.author = author;
+        }
+        public String getCreatedOn() {
+            return createdOn;
+        }
+        public void setCreatedOn(String createdOn) {
+            this.createdOn = createdOn;
+        }
+        public String getCreatedBy() {
+            return createdBy;
+        }
+        public void setCreatedBy(String createdBy) {
+            this.createdBy = createdBy;
+        }
+        public String getCreatedByUser() {
+            return createdByUser;
+        }
+        public void setCreatedByUser(String createdByUser) {
+            this.createdByUser = createdByUser;
+        }
+        public String getModifiedOn() {
+            return modifiedOn;
+        }
+        public void setModifiedOn(String modifiedOn) {
+            this.modifiedOn = modifiedOn;
+        }
+        public String getModifiedBy() {
+            return modifiedBy;
+        }
+        public void setModifiedBy(String modifiedBy) {
+            this.modifiedBy = modifiedBy;
+        }
         public String getSize() {
             return size;
         }
