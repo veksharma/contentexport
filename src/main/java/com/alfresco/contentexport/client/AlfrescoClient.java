@@ -1,6 +1,7 @@
 package com.alfresco.contentexport.client;
 
 import com.alfresco.contentexport.config.AlfrescoProperties;
+import com.alfresco.contentexport.dto.DocListResponse;
 import com.alfresco.contentexport.dto.DocListShortResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -164,6 +165,34 @@ public class AlfrescoClient {
                 DocListShortResponse.class
         );
         DocListShortResponse body = response.getBody();
+        int totalRecords = body != null ? body.getTotalRecords() : 0;
+        int itemCount = body != null && body.getItems() != null ? body.getItems().size() : 0;
+        log.info(
+                "Fetched folder doc list for folderNodeId={}, status={}, totalRecords={}, items={}",
+                folderNodeId,
+                response.getStatusCode(),
+                totalRecords,
+                itemCount
+        );
+        return response;
+    }
+
+    public ResponseEntity<DocListResponse> getFolderChildrenList(String folderNodeId) {
+        log.info("Fetching folder doc list for folderNodeId={}", folderNodeId);
+        String url = properties.getBaseUrl()
+                + "/alfresco/service/slingshot/doclib/doclist/all/node/workspace/SpacesStore/"
+                + folderNodeId;
+        log.debug("Alfresco request URL: {}", url);
+
+        HttpEntity<Void> entity = new HttpEntity<>(createHeaders());
+
+        ResponseEntity<DocListResponse> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                DocListResponse.class
+        );
+        DocListResponse body = response.getBody();
         int totalRecords = body != null ? body.getTotalRecords() : 0;
         int itemCount = body != null && body.getItems() != null ? body.getItems().size() : 0;
         log.info(

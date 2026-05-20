@@ -1,6 +1,7 @@
 package com.alfresco.contentexport.controller;
 
 import com.alfresco.contentexport.client.AlfrescoClient;
+import com.alfresco.contentexport.dto.DocListResponse;
 import com.alfresco.contentexport.dto.DocListShortResponse;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
@@ -25,6 +26,7 @@ public class NotificationController {
     public static final String GSTAT = "fc9142f8-2de1-4803-a691-e014025c6cc4";
     public static final String SVLDRS= "6b5dbcbc-939f-4ba9-8565-b9c3cb702170";
     public static final String customsNtcaadri= "52db44ae-f3ad-4d1c-8cb9-1bd9b521404b";
+    public static final String SERVICE_TAX = "e7d4e84a-3fa3-49bf-9d7b-b602bdaa6ab1";
     private final AlfrescoClient alfrescoClient;
 
     public NotificationController(AlfrescoClient alfrescoClient) {
@@ -149,5 +151,15 @@ public class NotificationController {
                 headers,
                 response.getStatusCode()
         );
+    }
+
+    @GetMapping("/service-tax")
+    public ResponseEntity<DocListResponse> getServiceNotifications() {
+        ResponseEntity<DocListResponse> response =
+                alfrescoClient.getFolderChildrenList(SERVICE_TAX);
+
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .body(response.getBody());
     }
 }
