@@ -19,6 +19,7 @@ public class CircularsController {
     public static final String serviceTax= "f1fc6c8e-5180-4e43-820b-b02c81729e9a";
     public static final String SVLDRS= "2802c253-f6ba-4cad-8d0e-844c8cef18a2";
     public static final String UTGST= "780b1f0b-a549-4700-a70f-6c2a2e2290a7";
+    public static final String gstPressReleases= "f6944392-40dd-4f9e-8540-34bb34dec6da";
 
     private final AlfrescoClient alfrescoClient;
 
@@ -100,6 +101,16 @@ public class CircularsController {
     public ResponseEntity<DocListShortResponse> getUtgstCirculars() {
         ResponseEntity<DocListShortResponse> response =
                 alfrescoClient.getFolderChildrenAsDocList(UTGST);
+
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .body(response.getBody());
+    }
+
+    @GetMapping("/gstPressReleases")
+    public ResponseEntity<DocListShortResponse> getgstPressReleases() {
+        ResponseEntity<DocListShortResponse> response =
+                alfrescoClient.getFolderChildrenAsDocList(gstPressReleases);
 
         return ResponseEntity
                 .status(response.getStatusCode())
