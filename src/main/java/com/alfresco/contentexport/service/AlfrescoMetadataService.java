@@ -121,16 +121,16 @@ public class AlfrescoMetadataService {
             result.put("aspects", extractAspects(document));
 
             // Useful direct fields
-            result.put("name", properties.get("cmis_name"));
-            result.put("objectType", properties.get("cmis_objectTypeId"));
-            result.put("baseType", properties.get("cmis_baseTypeId"));
-            result.put("createdBy", properties.get("cmis_createdBy"));
-            result.put("lastModifiedBy", properties.get("cmis_lastModifiedBy"));
-            result.put("creationDate", properties.get("cmis_creationDate"));
-            result.put("lastModificationDate", properties.get("cmis_lastModificationDate"));
-            result.put("mimeType", properties.get("cmis_contentStreamMimeType"));
-            result.put("size", properties.get("cmis_contentStreamLength"));
-            result.put("version", properties.get("cmis_versionLabel"));
+            result.put("name", properties.get("cmis:name"));
+            result.put("objectType", properties.get("cmis:objectTypeId"));
+            result.put("baseType", properties.get("cmis:baseTypeId"));
+            result.put("createdBy", properties.get("cmis:createdBy"));
+            result.put("lastModifiedBy", properties.get("cmis:lastModifiedBy"));
+            result.put("creationDate", properties.get("cmis:creationDate"));
+            result.put("lastModificationDate", properties.get("cmis:lastModificationDate"));
+            result.put("mimeType", properties.get("cmis:contentStreamMimeType"));
+            result.put("size", properties.get("cmis:contentStreamLength"));
+            result.put("version", properties.get("cmis:versionLabel"));
 
             return result;
 
@@ -170,7 +170,7 @@ public class AlfrescoMetadataService {
                 if (values.isEmpty()) {
                     properties.put(propertyName, null);
                 } else if (values.size() == 1) {
-                    properties.put(normalizeKey(propertyName), convertValue(values.get(0), localName));
+                    properties.put(propertyName, convertValue(values.get(0), localName));
                 } else {
                     properties.put(propertyName, values);
                 }
@@ -178,13 +178,6 @@ public class AlfrescoMetadataService {
         }
 
         return properties;
-    }
-
-    private String normalizeKey(String key) {
-        if (key == null) {
-            return null;
-        }
-        return key.replace(":", "_");
     }
 
     private List<String> getChildValues(Element propertyElement) {
