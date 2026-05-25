@@ -32,4 +32,10 @@ public class MetadataController {
         String response = alfrescoMetadataService.getNodeMetadataAsJson(nodeId);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping(value = "/fullmetadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Map<String, Object>> fullMetadata(@PathVariable String nodeId) {
+        Map<String, Object> response = alfrescoMetadataService.fullMetadata(nodeId);
+        return ResponseEntity.ok(response);
+    }
 }

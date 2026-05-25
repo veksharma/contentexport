@@ -43,8 +43,15 @@ public class AlfrescoMetadataService {
         this.restTemplate = restTemplate;
     }
 
+    public Map<String, Object> fullMetadata(String nodeId) {
+        log.info("Fetching fullMetadata for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return stringObjectMap;
+    }
+
     public String getNodeMetadataAsJson(String nodeId) {
-        log.info("Fetching metadata for nodeId={}", nodeId);
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
         String xml = fetchAlfrescoNodeMetadataXml(nodeId);
         Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
         return getLessMetaData(stringObjectMap, nodeId);
