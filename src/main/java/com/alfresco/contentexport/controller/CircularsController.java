@@ -2,13 +2,14 @@ package com.alfresco.contentexport.controller;
 
 import com.alfresco.contentexport.client.AlfrescoClient;
 import com.alfresco.contentexport.dto.DocListShortResponse;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/circulars")
+@RequestMapping(value = "/api/v1/circulars", produces = MediaType.APPLICATION_JSON_VALUE)
 public class CircularsController {
 
     public static final String CGST= "3a83517d-fc8d-44c3-bc66-0a9b4207bdd1";
