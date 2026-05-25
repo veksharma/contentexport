@@ -27,10 +27,7 @@ public class MetadataController {
      * Example:
      * GET /api/v1/alfresco/nodes/07c6038f-e154-4836-9609-e7ae85300582/metadata-json
      */
-    @GetMapping(
-            value = "/metadata/{nodeId}",
-            produces = MediaType.APPLICATION_JSON_VALUE
-    )
+    @GetMapping(value = "/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> getNodeMetadataAsJson(@PathVariable String nodeId) {
         Map<String, Object> response = alfrescoMetadataService.getNodeMetadataAsJson(nodeId);
         return ResponseEntity.ok(response);
