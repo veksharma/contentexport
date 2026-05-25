@@ -1,7 +1,7 @@
 alfresco:
   base-url: http://cms.cchtaxonline.com
-  username: admin
-  password: adm!n@cch123
+  username: username
+  password: password
   root-folder-id: -root-
 
 client-export:
