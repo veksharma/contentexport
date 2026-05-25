@@ -1,5 +1,6 @@
 package com.alfresco.contentexport.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,16 +36,40 @@ public class AlfrescoMetadataService {
     private String alfrescoPassword;
 
     private static final Logger log = LoggerFactory.getLogger(AlfrescoMetadataService.class);
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
 
     public AlfrescoMetadataService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
-    public Map<String, Object> getNodeMetadataAsJson(String nodeId) {
+    public String getNodeMetadataAsJson(String nodeId) {
         log.info("Fetching metadata for nodeId={}", nodeId);
         String xml = fetchAlfrescoNodeMetadataXml(nodeId);
-        return convertAlfrescoXmlToJson(nodeId, xml);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessMetaData(stringObjectMap, nodeId);
+    }
+
+    private String getLessMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("nodeId", nodeId);
+            response.put("subject", properties.get("sTaxNotification:subject"));
+            response.put("sTaxNotificationDate", properties.get("sTaxNotification:sTaxNotificationDate"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch notification summary"
+                }
+                """;
+        }
     }
 
     private String fetchAlfrescoNodeMetadataXml(String nodeId) {
