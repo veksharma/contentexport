@@ -27,9 +27,15 @@ public class MetadataController {
      * Example:
      * GET /api/v1/alfresco/nodes/07c6038f-e154-4836-9609-e7ae85300582/metadata-json
      */
-    @GetMapping(value = "/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getNodeMetadataAsJson(@PathVariable String nodeId) {
-        String response = alfrescoMetadataService.getNodeMetadataAsJson(nodeId);
+    @GetMapping(value = "notification/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getNotificationNodeMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getNotificationNodeMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "circular/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getCircularNodeMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getCircularNodeMetadataAsJson(nodeId);
         return ResponseEntity.ok(response);
     }
 

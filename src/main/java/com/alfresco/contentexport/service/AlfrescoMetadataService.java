@@ -50,22 +50,53 @@ public class AlfrescoMetadataService {
         return stringObjectMap;
     }
 
-    public String getNodeMetadataAsJson(String nodeId) {
+    public String getNotificationNodeMetadataAsJson(String nodeId) {
         log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
         String xml = fetchAlfrescoNodeMetadataXml(nodeId);
         Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
-        return getLessMetaData(stringObjectMap, nodeId);
+        return getLessNotificationMetaData(stringObjectMap, nodeId);
     }
 
-    private String getLessMetaData(Map<String, Object> fullMetadata, String nodeId) {
+    public String getCircularNodeMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessCircularMetaData(stringObjectMap, nodeId);
+    }
+
+    private String getLessNotificationMetaData(Map<String, Object> fullMetadata, String nodeId) {
         try {
             Map<String, Object> properties =
                     (Map<String, Object>) fullMetadata.get("properties");
 
             Map<String, Object> response = new LinkedHashMap<>();
-            response.put("nodeId", nodeId);
-            response.put("subject", properties.get("sTaxNotification:subject"));
-            response.put("sTaxNotificationDate", properties.get("sTaxNotification:sTaxNotificationDate"));
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Subject", properties.get("sTaxNotification:subject"));
+            response.put("StaxNotificationDate", properties.get("sTaxNotification:sTaxNotificationDate"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch notification summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessCircularMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Subject", properties.get("sTaxCircular:subject"));
+            response.put("StaxNotificationDate", properties.get("sTaxCircular:sTaxCircularDate"));
 
             return objectMapper.writeValueAsString(response);
 

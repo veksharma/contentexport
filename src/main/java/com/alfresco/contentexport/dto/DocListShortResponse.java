@@ -2,7 +2,7 @@ package com.alfresco.contentexport.dto;
 
 import java.util.List;
 
-public class DocListShortResponse {
+public class  DocListShortResponse {
     private int totalRecords;
     private List<DocListItem> items;
 
