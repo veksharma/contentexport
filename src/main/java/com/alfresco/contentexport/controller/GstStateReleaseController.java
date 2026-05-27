@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/gstPressRelease")
-public class GstStateRelease {
+public class GstStateReleaseController {
 
     public static final String circular= "efd0abd3-14cd-48ad-a45a-355217f6b3cc";
     public static final String clarifications= "02018466-7bab-4b0b-8481-28a3aa72b4aa";
@@ -21,7 +21,7 @@ public class GstStateRelease {
 
     private final AlfrescoClient alfrescoClient;
 
-    public GstStateRelease(AlfrescoClient alfrescoClient) {
+    public GstStateReleaseController(AlfrescoClient alfrescoClient) {
         this.alfrescoClient = alfrescoClient;
     }
 

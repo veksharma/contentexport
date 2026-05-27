@@ -75,6 +75,36 @@ public class MetadataController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping(value = "gstRateNotification/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGstRateNotificationMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getGstRateNotificationMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "form/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getFormMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getFormMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "gstActs/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGstActsMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getGstActsMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "gstRules/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGstRulesMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getGstRulesMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "gstStateRules/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGstStateRulesMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getGstStateRulesMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping(value = "/fullmetadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> fullMetadata(@PathVariable String nodeId) {
         Map<String, Object> response = alfrescoMetadataService.fullMetadata(nodeId);
