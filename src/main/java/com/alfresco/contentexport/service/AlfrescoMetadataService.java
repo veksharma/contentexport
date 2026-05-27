@@ -64,6 +64,48 @@ public class AlfrescoMetadataService {
         return getLessCircularMetaData(stringObjectMap, nodeId);
     }
 
+    public String getClarificationNodeMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessClarificationMetaData(stringObjectMap, nodeId);
+    }
+
+    public String getGstStateReleaseNodeMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessGstStateReleaseMetaData(stringObjectMap, nodeId);
+    }
+
+    public String getGstOrdinanceNodeMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessGstOrdinanceMetaData(stringObjectMap, nodeId);
+    }
+
+    public String getOrderTradeNoticeNodeMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessOrderTradeNoticeMetaData(stringObjectMap, nodeId);
+    }
+
+    public String getDifficultyOrdersNodeMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessDifficultyOrdersMetaData(stringObjectMap, nodeId);
+    }
+
+    public String getGstPressReleaseNodeMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessGstPressReleaseMetaData(stringObjectMap, nodeId);
+    }
+
     private String getLessNotificationMetaData(Map<String, Object> fullMetadata, String nodeId) {
         try {
             Map<String, Object> properties =
@@ -104,7 +146,145 @@ public class AlfrescoMetadataService {
             log.error("exception", e);
             return """
                 {
-                  "error": "Failed to fetch notification summary"
+                  "error": "Failed to fetch Circular summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessGstStateReleaseMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Subject", properties.get("sTaxCircular:subject"));
+            response.put("StaxNotificationDate", properties.get("sTaxClarification:sTaxClarificationDate"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch Gst-State-Release summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessGstOrdinanceMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Subject", properties.get("sTaxGSTNotification:subject"));
+            response.put("StaxNotificationDate", properties.get("sTaxGSTNotification:notificationDate"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch Gst Ordinance summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessClarificationMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Subject", properties.get("sTaxCircular:subject"));
+            response.put("StaxNotificationDate", properties.get("sTaxClarification:sTaxClarificationDate"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch Clarification summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessDifficultyOrdersMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Subject", properties.get("sTaxOrderTradeNoticeInstruction:subject"));
+            response.put("StaxNotificationDate", properties.get("sTaxOrderTradeNoticeInstruction:sTaxOrderTradeNoticeInstructionDate"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch Difficulty Orders summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessOrderTradeNoticeMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Subject", properties.get("sTaxOrderTradeNoticeInstruction:subject"));
+            response.put("StaxNotificationDate", properties.get("sTaxOrderTradeNoticeInstruction:sTaxOrderTradeNoticeInstructionDate"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch Order Trade Notice summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessGstPressReleaseMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Subject", properties.get("sTaxGSTPressReleases:subject"));
+            response.put("StaxNotificationDate", properties.get("sTaxGSTPressReleases:sTaxGSTPressReleasesDate"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch Gst Press Release summary"
                 }
                 """;
         }

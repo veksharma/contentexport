@@ -39,6 +39,42 @@ public class MetadataController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping(value = "clarification/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getClarificationNodeMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getClarificationNodeMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "gstStateRelease/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGstStateReleaseNodeMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getGstStateReleaseNodeMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "gstOrdinance/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGstOrdinanceNodeMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getGstOrdinanceNodeMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "OrderTradeNotice/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getOrderTradeNoticeMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getOrderTradeNoticeNodeMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "difficultyOrders/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getDifficultyOrdersMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getDifficultyOrdersNodeMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "gstPressRelease/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGstPressReleaseNodeMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getGstPressReleaseNodeMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping(value = "/fullmetadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> fullMetadata(@PathVariable String nodeId) {
         Map<String, Object> response = alfrescoMetadataService.fullMetadata(nodeId);
