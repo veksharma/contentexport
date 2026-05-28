@@ -196,8 +196,8 @@ public class AlfrescoMetadataService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
-            response.put("Subject", properties.get("sTaxCircular:subject"));
-            response.put("StaxNotificationDate", properties.get("sTaxClarification:sTaxClarificationDate"));
+            response.put("Subject", properties.get("sTaxGSTNotification:subject"));
+            response.put("StaxNotificationDate", properties.get("sTaxGSTNotification:notificationDate"));
 
             return objectMapper.writeValueAsString(response);
 
@@ -242,7 +242,7 @@ public class AlfrescoMetadataService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
-            response.put("Subject", properties.get("sTaxCircular:subject"));
+            response.put("Subject", properties.get("sTaxClarification:subject"));
             response.put("StaxNotificationDate", properties.get("sTaxClarification:sTaxClarificationDate"));
 
             return objectMapper.writeValueAsString(response);
