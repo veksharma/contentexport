@@ -2,13 +2,16 @@ package com.alfresco.contentexport.controller;
 
 import com.alfresco.contentexport.client.AlfrescoClient;
 import com.alfresco.contentexport.dto.DocListShortResponse;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/gstRulesNewrt")
+@RequestMapping(value="/api/v1/gstRulesNewrt", produces = MediaType.APPLICATION_JSON_VALUE)
 public class GstRulesController {
 
     public static final String gstRulesNewrt = "d62f8761-e51f-4cde-a5c4-bfd25ec0461f";
@@ -19,8 +22,17 @@ public class GstRulesController {
     }
 
     @GetMapping("/gstRules")
-    public ResponseEntity<DocListShortResponse> getGstRulesNewrt() {        ResponseEntity<DocListShortResponse> response =
+    public ResponseEntity<DocListShortResponse> getGstRulesNewrt() {ResponseEntity<DocListShortResponse> response =
                 alfrescoClient.getFolderChildrenAsDocList(gstRulesNewrt);
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+        headers.setContentDisposition(
+                ContentDisposition.attachment()
+                        .filename(gstRulesNewrt)
+                        .build()
+        );
 
         return ResponseEntity
                 .status(response.getStatusCode())
