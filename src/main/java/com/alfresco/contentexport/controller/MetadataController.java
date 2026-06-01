@@ -105,6 +105,24 @@ public class MetadataController {
         return ResponseEntity.ok(response);
     }
 
+//    @GetMapping(value = "gstStateRules/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<String> getGstStateRulesMetadataAsJson(@PathVariable String nodeId) {
+//        String response = alfrescoMetadataService.getGstStateRulesMetadataAsJson(nodeId);
+//        return ResponseEntity.ok(response);
+//    }
+//
+//    @GetMapping(value = "gstStateRules/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<String> getGstStateRulesMetadataAsJson(@PathVariable String nodeId) {
+//        String response = alfrescoMetadataService.getGstStateRulesMetadataAsJson(nodeId);
+//        return ResponseEntity.ok(response);
+//    }
+//
+//    @GetMapping(value = "gstStateRules/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<String> getGstStateRulesMetadataAsJson(@PathVariable String nodeId) {
+//        String response = alfrescoMetadataService.getGstStateRulesMetadataAsJson(nodeId);
+//        return ResponseEntity.ok(response);
+//    }
+
     @GetMapping(value = "/fullmetadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> fullMetadata(@PathVariable String nodeId) {
         Map<String, Object> response = alfrescoMetadataService.fullMetadata(nodeId);
