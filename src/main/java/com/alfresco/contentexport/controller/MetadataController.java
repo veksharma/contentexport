@@ -105,23 +105,35 @@ public class MetadataController {
         return ResponseEntity.ok(response);
     }
 
-//    @GetMapping(value = "gstStateRules/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<String> getGstStateRulesMetadataAsJson(@PathVariable String nodeId) {
-//        String response = alfrescoMetadataService.getGstStateRulesMetadataAsJson(nodeId);
-//        return ResponseEntity.ok(response);
-//    }
-//
-//    @GetMapping(value = "gstStateRules/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<String> getGstStateRulesMetadataAsJson(@PathVariable String nodeId) {
-//        String response = alfrescoMetadataService.getGstStateRulesMetadataAsJson(nodeId);
-//        return ResponseEntity.ok(response);
-//    }
-//
-//    @GetMapping(value = "gstStateRules/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<String> getGstStateRulesMetadataAsJson(@PathVariable String nodeId) {
-//        String response = alfrescoMetadataService.getGstStateRulesMetadataAsJson(nodeId);
-//        return ResponseEntity.ok(response);
-//    }
+    @GetMapping(value = "gstStateLegis/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGstStateLegisMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getGstStateLegisMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "customAct/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getCustomActMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getCustomActMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "customRules/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getCustomRulesMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getCustomRulesMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "financeAct/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getFinanceActMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getFinanceActMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "customRegulation/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getCustomRegulationMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getCustomRegulationMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
 
     @GetMapping(value = "/fullmetadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> fullMetadata(@PathVariable String nodeId) {
