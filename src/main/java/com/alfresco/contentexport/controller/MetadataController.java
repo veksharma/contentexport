@@ -135,6 +135,54 @@ public class MetadataController {
         return ResponseEntity.ok(response);
     }
 
+    @GetMapping(value = "gstTariff/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGstTariffMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getGstTariffMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "gstPptNew/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getPptNewMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getGstPptNewMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "gstExperts/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGstExpertsMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getGstExpertsMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "commentary/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getCommentaryMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getCommentaryMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "article/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getArticleMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getArticleMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "gstQA/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGstQAMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getGstQAMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "vatReadyReckoner/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getVatReadyReckonerMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getVatReadyReckonerMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping(value = "gstRcm/metadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> getGstRcmMetadataAsJson(@PathVariable String nodeId) {
+        String response = alfrescoMetadataService.getGstRcmMetadataAsJson(nodeId);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping(value = "/fullmetadata/{nodeId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Map<String, Object>> fullMetadata(@PathVariable String nodeId) {
         Map<String, Object> response = alfrescoMetadataService.fullMetadata(nodeId);

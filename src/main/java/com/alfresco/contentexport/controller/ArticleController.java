@@ -8,23 +8,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/gstState")
-public class GstStateRulesController {
+@RequestMapping("/api/v1/article")
+public class ArticleController {
 
-    public static final String gstStateRules = "4967ccc2-7b36-4b44-bac7-0344210f857b";
+    public static final String articleFolderId = "4fb66c38-f30b-400e-bbfa-81d69512877f";
 
     private final AlfrescoClient alfrescoClient;
-    public GstStateRulesController(AlfrescoClient alfrescoClient) {
+    public ArticleController(AlfrescoClient alfrescoClient) {
         this.alfrescoClient = alfrescoClient;
     }
 
-    @GetMapping("/gstStateRules")
-    public ResponseEntity<DocListShortResponse> getGstStateRules() {
+    @GetMapping("/articleFolderId")
+    public ResponseEntity<DocListShortResponse> getGstExperts() {
         ResponseEntity<DocListShortResponse> response =
-                alfrescoClient.getFolderChildrenAsDocList(gstStateRules);
+                alfrescoClient.getFolderChildrenAsDocList(articleFolderId);
 
         return ResponseEntity
                 .status(response.getStatusCode())
                 .body(response.getBody());
     }
+
 }

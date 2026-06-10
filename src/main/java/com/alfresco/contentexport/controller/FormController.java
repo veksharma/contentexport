@@ -18,7 +18,7 @@ public class FormController {
         this.alfrescoClient = alfrescoClient;
     }
 
-    @GetMapping("/forms")
+    @GetMapping("/getForms")
     public ResponseEntity<DocListShortResponse> getForm() {
         ResponseEntity<DocListShortResponse> response =
                 alfrescoClient.getFolderChildrenAsDocList(forms);

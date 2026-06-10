@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/gstTeriff")
+@RequestMapping("/api/v1/gstTariff")
 public class GstTariffController {
 
     public static final String tariffExemptedGoods = "b6109d77-35b8-42ec-9faa-47de1bcb449b";

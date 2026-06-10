@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/customRegulation")
+@RequestMapping("/api/v1/custom")
 public class CustomRegulationController {
 
     public static final String customRegulation  = "592f187c-4203-4c9a-9790-92f77536cf27";

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/customAct")
+@RequestMapping("/api/v1/custom")
 public class CustomActController {
 
     public static final String customAct = "d7c567c1-6f29-4e71-933d-4a61fc1714b9";

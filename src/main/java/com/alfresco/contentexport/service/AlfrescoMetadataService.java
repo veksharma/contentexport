@@ -177,51 +177,60 @@ public class AlfrescoMetadataService {
         return getLessCustomRegulationMetaData(stringObjectMap, nodeId);
     }
 
-    private String getLessFinanceActMetaData(Map<String, Object> fullMetadata, String nodeId) {
-        try {
-            Map<String, Object> properties =
-                    (Map<String, Object>) fullMetadata.get("properties");
-
-            Map<String, Object> response = new LinkedHashMap<>();
-            response.put("NodeId", nodeId);
-            response.put("Title", properties.get("cm:title"));
-            response.put("Subject", properties.get("sTaxFinanceAct:year"));
-            response.put("StaxNotificationDate", properties.get("sTaxFinanceAct:date"));
-
-            return objectMapper.writeValueAsString(response);
-
-        } catch (Exception e) {
-            log.error("exception", e);
-            return """
-                {
-                  "error": "Failed to Finance Act summary"
-                }
-                """;
-        }
+    public String getGstTariffMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessGstTariffMetaData(stringObjectMap, nodeId);
     }
 
-    private String getLessCustomRegulationMetaData(Map<String, Object> fullMetadata, String nodeId) {
-        try {
-            Map<String, Object> properties =
-                    (Map<String, Object>) fullMetadata.get("properties");
+    public String getGstPptNewMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessGstPptNewMetaData(stringObjectMap, nodeId);
+    }
 
-            Map<String, Object> response = new LinkedHashMap<>();
-            response.put("NodeId", nodeId);
-            response.put("Title", properties.get("cm:title"));
-            response.put("Description", properties.get("cm:description"));
-            response.put("Date", properties.get("sTaxCRRule:ruleDate"));
-            response.put("State", properties.get("sTaxCRRule:states"));
+    public String getGstExpertsMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessGstExpertsAnalysisMetaData(stringObjectMap, nodeId);
+    }
 
-            return objectMapper.writeValueAsString(response);
+    public String getCommentaryMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLesscommentaryMetaData(stringObjectMap, nodeId);
+    }
 
-        } catch (Exception e) {
-            log.error("exception", e);
-            return """
-                {
-                  "error": "Failed to Custom Regulation summary"
-                }
-                """;
-        }
+    public String getArticleMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessArticleMetaData(stringObjectMap, nodeId);
+    }
+
+    public String getGstQAMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessGstQAMetaData(stringObjectMap, nodeId);
+    }
+
+    public String getVatReadyReckonerMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessVatReadyReckonerMetaData(stringObjectMap, nodeId);
+    }
+
+    public String getGstRcmMetadataAsJson(String nodeId) {
+        log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessGstRcmReckonerMetaData(stringObjectMap, nodeId);
     }
 
     private String getLessNotificationMetaData(Map<String, Object> fullMetadata, String nodeId) {
@@ -593,6 +602,237 @@ public class AlfrescoMetadataService {
         }
     }
 
+    private String getLessFinanceActMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Subject", properties.get("sTaxFinanceAct:year"));
+            response.put("StaxNotificationDate", properties.get("sTaxFinanceAct:date"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to Finance Act summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessCustomRegulationMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Description", properties.get("cm:description"));
+            response.put("Date", properties.get("sTaxCRRule:ruleDate"));
+            response.put("State", properties.get("sTaxCRRule:states"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to Custom Regulation summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessGstTariffMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Date", properties.get("sTaxTSERule:ruleDate"));
+            response.put("States", properties.get("sTaxTSERule:states"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to GST Tariff summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessGstPptNewMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Category", properties.get("dTaxForms:formCategory"));
+            response.put("FormNo", properties.get("dTaxForms:formNo"));
+            response.put("Description", properties.get("cm:description"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch GstPptNew summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessGstExpertsAnalysisMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Author", properties.get("sTaxEAnalysis:author"));
+            response.put("Publication Date", properties.get("sTaxEAnalysis:publicationDate"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch GST Experts Analysis summary"
+                }
+                """;
+        }
+    }
+
+    private String getLesscommentaryMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Commentary Section", properties.get("sTaxComm:sTaxCommSection"));
+            response.put("Commentary Chapter", properties.get("sTaxComm:chapter"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch GST Experts Analysis summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessArticleMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Subject", properties.get("sTaxNotification:subject"));
+            response.put("StaxNotificationDate", properties.get("sTaxNotification:sTaxNotificationDate"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch Articles summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessGstQAMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Subject", properties.get("sTaxNotification:subject"));
+            response.put("StaxNotificationDate", properties.get("sTaxNotification:sTaxNotificationDate"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch GST QA summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessVatReadyReckonerMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Subject", properties.get("sTaxNotification:subject"));
+            response.put("StaxNotificationDate", properties.get("sTaxNotification:sTaxNotificationDate"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch VAT Ready Reckoner summary"
+                }
+                """;
+        }
+    }
+
+    private String getLessGstRcmReckonerMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Subject", properties.get("sTaxNotification:subject"));
+            response.put("StaxNotificationDate", properties.get("sTaxNotification:sTaxNotificationDate"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch Gst RCM summary"
+                }
+                """;
+        }
+    }
 
     private String fetchAlfrescoNodeMetadataXml(String nodeId) {
         String url = alfrescoBaseUrl

@@ -8,23 +8,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/gstState")
-public class GstStateRulesController {
+@RequestMapping("/api/v1/vatReckoner")
+public class VatReckonerController {
 
-    public static final String gstStateRules = "4967ccc2-7b36-4b44-bac7-0344210f857b";
+    public static final String vatReckoner = "826176ac-6494-4edf-acde-a5fa751f28cb";
 
     private final AlfrescoClient alfrescoClient;
-    public GstStateRulesController(AlfrescoClient alfrescoClient) {
+    public VatReckonerController(AlfrescoClient alfrescoClient) {
         this.alfrescoClient = alfrescoClient;
     }
 
-    @GetMapping("/gstStateRules")
-    public ResponseEntity<DocListShortResponse> getGstStateRules() {
+    @GetMapping("/vatReadyReckoner")
+    public ResponseEntity<DocListShortResponse> getGstExperts() {
         ResponseEntity<DocListShortResponse> response =
-                alfrescoClient.getFolderChildrenAsDocList(gstStateRules);
+                alfrescoClient.getFolderChildrenAsDocList(vatReckoner);
 
         return ResponseEntity
                 .status(response.getStatusCode())
                 .body(response.getBody());
     }
+
 }

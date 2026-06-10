@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/gstPressRelease")
+@RequestMapping("/api/v1/gstPress")
 public class GstPressReleasesController {
     public static final String gstPressReleases= "f6944392-40dd-4f9e-8540-34bb34dec6da";
 

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/gstRulesNewrt")
+@RequestMapping("/api/v1/gstRules")
 public class GstRulesController {
 
 //    public static final String cgstRulesOct = "95600d56-627a-4630-afdb-e3267942d61d";
