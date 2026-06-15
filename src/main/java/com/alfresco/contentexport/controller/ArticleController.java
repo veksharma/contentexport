@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ArticleController {
 
     public static final String articleFolderId = "4fb66c38-f30b-400e-bbfa-81d69512877f";
+    public static final String anInternationalPerspective = "7c12ed14-0272-4594-a4ac-29782089c549";
+    public static final String deloitteDisquisition = "238e48e8-359d-4ef2-9bd5-21986f776cec";
 
     private final AlfrescoClient alfrescoClient;
     public ArticleController(AlfrescoClient alfrescoClient) {
@@ -22,6 +24,26 @@ public class ArticleController {
     public ResponseEntity<DocListShortResponse> getGstExperts() {
         ResponseEntity<DocListShortResponse> response =
                 alfrescoClient.getFolderChildrenAsDocList(articleFolderId);
+
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .body(response.getBody());
+    }
+
+    @GetMapping("/anInternationalPerspective")
+    public ResponseEntity<DocListShortResponse> getGstInternationalExperts() {
+        ResponseEntity<DocListShortResponse> response =
+                alfrescoClient.getFolderChildrenAsDocList(anInternationalPerspective);
+
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .body(response.getBody());
+    }
+
+    @GetMapping("/deloitteDisquisition")
+    public ResponseEntity<DocListShortResponse> getGstDeloitteExperts() {
+        ResponseEntity<DocListShortResponse> response =
+                alfrescoClient.getFolderChildrenAsDocList(deloitteDisquisition);
 
         return ResponseEntity
                 .status(response.getStatusCode())

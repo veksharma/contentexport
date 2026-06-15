@@ -177,6 +177,62 @@ public class AlfrescoClient {
         return response;
     }
 
+
+
+
+    public ResponseEntity<DocListShortResponse> getFolderChildrenAsDocListWithPagination(
+            String folderNodeId,
+            int page,
+            int size) {
+
+        log.info("Fetching paginated folder doc list for folderNodeId={}", folderNodeId);
+
+        int skipCount = (page - 1) * size;
+
+        String url = properties.getBaseUrl()
+                + "/alfresco/service/slingshot/doclib/doclist/all/node/workspace/SpacesStore/"
+                + folderNodeId
+                + "?skipCount=" + skipCount
+                + "&maxItems=" + size;
+
+        System.out.println("URL = " + url);
+
+        HttpEntity<Void> entity = new HttpEntity<>(createHeaders());
+
+        ResponseEntity<DocListShortResponse> response = restTemplate.exchange(
+                url,
+                HttpMethod.GET,
+                entity,
+                DocListShortResponse.class
+        );
+
+        // Manual Pagination
+        DocListShortResponse body = response.getBody();
+
+        if (body != null && body.getItems() != null) {
+
+            int start = (page - 1) * size;
+            int end = Math.min(start + size, body.getItems().size());
+
+            if (start < body.getItems().size()) {
+                body.setItems(body.getItems().subList(start, end));
+            } else {
+                body.setItems(java.util.Collections.emptyList());
+            }
+        }
+
+        return ResponseEntity.status(response.getStatusCode()).body(body);
+    }
+
+
+
+
+
+
+
+
+
+
     public ResponseEntity<DocListResponse> getFolderChildrenList(String folderNodeId) {
         log.info("Fetching folder doc list for folderNodeId={}", folderNodeId);
         String url = properties.getBaseUrl()

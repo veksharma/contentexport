@@ -8,26 +8,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/gstPress")
-public class GstPressReleasesController {
-    public static final String gstPressReleases= "f6944392-40dd-4f9e-8540-34bb34dec6da";
+@RequestMapping("/api/v1/gstDraftForms")
+public class GstDraftFormsController {
+
+    private static final String GST_DRAFT_FORMS =
+            "4d03384f-248f-4eb4-abf4-65e3db1cabac";
 
     private final AlfrescoClient alfrescoClient;
 
-    public GstPressReleasesController(AlfrescoClient alfrescoClient) {
+    public GstDraftFormsController(AlfrescoClient alfrescoClient) {
         this.alfrescoClient = alfrescoClient;
     }
 
-    @GetMapping("/gstPressReleases")
-    public ResponseEntity<DocListShortResponse> getgstPressReleases() {
+    @GetMapping("/getDraftForms")
+    public ResponseEntity<DocListShortResponse> getDraftForms() {
+
         ResponseEntity<DocListShortResponse> response =
-                alfrescoClient.getFolderChildrenAsDocList(gstPressReleases);
+                alfrescoClient.getFolderChildrenAsDocList(GST_DRAFT_FORMS);
 
         return ResponseEntity
                 .status(response.getStatusCode())
                 .body(response.getBody());
     }
-
-
-
 }

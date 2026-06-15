@@ -30,16 +30,16 @@ public class  DocListShortResponse {
         /*private String type;
         private String mimetype;*/
 
-       /* private String fileName;
-        private String title;*/
-        /*private String description;
+        private String fileName;
+        private String title;
+        private String description;
         private String author;
         private String createdOn;
         private String createdBy;
         private String createdByUser;
         private String modifiedOn;
         private String modifiedBy;
-        private String size;*/
+        private String size;
 
 
         public String getNodeRef() {
