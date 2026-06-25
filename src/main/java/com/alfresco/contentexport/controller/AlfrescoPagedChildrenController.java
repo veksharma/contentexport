@@ -24,7 +24,7 @@ public class AlfrescoPagedChildrenController {
     public ResponseEntity<Map<String, Object>> getPagedChildren(
             @PathVariable String folderNodeId,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "1000") int size
     ) {
         return ResponseEntity.ok(
                 alfrescoPagedChildrenService.getPagedChildren(folderNodeId, page, size)

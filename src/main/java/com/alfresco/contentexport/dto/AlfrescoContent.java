@@ -4,7 +4,7 @@ public class AlfrescoContent {
 
     private String mimeType;
     private String mimeTypeName;
-    private Long sizeInBytes;
+    private Long InBytes;
     private String encoding;
 
     public String getMimeType() {
@@ -15,8 +15,8 @@ public class AlfrescoContent {
         return mimeTypeName;
     }
 
-    public Long getSizeInBytes() {
-        return sizeInBytes;
+    public Long getInBytes() {
+        return InBytes;
     }
 
     public String getEncoding() {
@@ -31,8 +31,8 @@ public class AlfrescoContent {
         this.mimeTypeName = mimeTypeName;
     }
 
-    public void setSizeInBytes(Long sizeInBytes) {
-        this.sizeInBytes = sizeInBytes;
+    public void setInBytes(Long InBytes) {
+        this.InBytes = InBytes;
     }
 
     public void setEncoding(String encoding) {

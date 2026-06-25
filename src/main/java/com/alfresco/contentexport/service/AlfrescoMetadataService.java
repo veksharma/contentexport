@@ -134,6 +134,13 @@ public class AlfrescoMetadataService {
         return getLessGstCaseLawsMetaData(stringObjectMap, nodeId);
     }
 
+    public String getStCaseLawsMetadataAsJson(String nodeId) {
+        log.info("Fetching getStCaseLawsMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessStCaseLawsMetaData(stringObjectMap, nodeId);
+    }
+
 
     public String getFormMetadataAsJson(String nodeId) {
         log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
@@ -154,6 +161,13 @@ public class AlfrescoMetadataService {
         String xml = fetchAlfrescoNodeMetadataXml(nodeId);
         Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
         return getLessStateDraftFormsMetaData(stringObjectMap, nodeId);
+    }
+
+    public String getGstGoodsOrderInstructionMetadataAsJson(String nodeId) {
+        log.info("Fetching getGstGoodsOrderInstructionMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessGstGoodsOrderInstructionMetaData(stringObjectMap, nodeId);
     }
 
 
@@ -227,6 +241,36 @@ public class AlfrescoMetadataService {
         Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
         return getLessGstPptNewMetaData(stringObjectMap, nodeId);
     }
+
+    public String getGstCouncilMeetingMetadataAsJson(String nodeId) {
+        log.info("Fetching getGstCouncilMeetingMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessGstCouncilMeetingMetaData(stringObjectMap, nodeId);
+    }
+
+    public String getReadyReckonerServiceMetadataAsJson(String nodeId) {
+        log.info("Fetching getReadyReckonerServiceMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessReadyReckonerServiceMetaData(stringObjectMap, nodeId);
+    }
+
+    public String getReadyReckonerGoodsServiceMetadataAsJson(String nodeId) {
+        log.info("Fetching getReadyReckonerGoodsServiceMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessReadyReckonerGoodsServiceMetaData(stringObjectMap, nodeId);
+    }
+
+    public String getGstCommentaryMetadataAsJson(String nodeId) {
+        log.info("Fetching getGstCommentaryMetadataAsJson for nodeId={}", nodeId);
+        String xml = fetchAlfrescoNodeMetadataXml(nodeId);
+        Map<String, Object> stringObjectMap = convertAlfrescoXmlToJson(nodeId, xml);
+        return getLessGstCommentaryMetaData(stringObjectMap, nodeId);
+    }
+
+
 
     public String getGstExpertsMetadataAsJson(String nodeId) {
         log.info("Fetching getNodeMetadataAsJson for nodeId={}", nodeId);
@@ -624,13 +668,58 @@ public class AlfrescoMetadataService {
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
             response.put("Subject", properties.get("cm:description"));
-            response.put("StaxNotificationDate", properties.get("sTaxGSTPressReleases:sTaxGSTPressReleasesDate"));
+            response.put("sTaxDraftFormsDate", properties.get("sTaxDraftForms:sTaxDraftFormsDate"));
+            response.put("pnID", properties.get("sTaxDraftForms:pnID"));
+            response.put("formTopic", properties.get("sTaxDraftForms:formTopic"));
+            response.put("formNo", properties.get("sTaxDraftForms:formNo"));
+            response.put("formName", properties.get("sTaxDraftForms:formName"));
+            response.put("states", properties.get("sTaxDraftForms:states"));
             return objectMapper.writeValueAsString(response);
         } catch (Exception e) {
             log.error("exception", e);
             return """
         {
           "error": "Failed to fetch State Draft Forms summary"
+        }
+        """;
+        }
+    }
+
+
+    private String getLessGstGoodsOrderInstructionMetaData(
+            Map<String, Object> fullMetadata,
+            String nodeId) {
+
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("description", properties.get("cm:description"));
+            response.put("OrderTradeNotificationDate", properties.get("sTaxGSTInstruction:OrderTradeNotificationDate"));
+            response.put("subject", properties.get("sTaxGSTInstruction:subject"));
+            response.put("pnID", properties.get("sTaxGSTInstruction:pnID"));
+            response.put("orderNo", properties.get("sTaxGSTInstruction:orderNo"));
+            response.put("topic", properties.get("sTaxGSTInstruction:topic"));
+            response.put("states", properties.get("sTaxGSTInstruction:states"));
+            response.put("citation", properties.get("sTaxGSTInstruction:citation"));
+            response.put("fileNo", properties.get("sTaxGSTInstruction:fileNo"));
+            response.put("section", properties.get("sTaxGSTInstruction:section"));
+            response.put("year", properties.get("sTaxGSTInstruction:year"));
+            response.put("topicPnID", properties.get("sTaxGSTInstruction:topicPnID"));
+            response.put("topicName", properties.get("sTaxGSTInstruction:topicName"));
+            response.put("topicContent", properties.get("sTaxGSTInstruction:topicContent"));
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+
+            return """
+        {
+          "error": "Failed to fetch GST Goods Order Instruction summary"
         }
         """;
         }
@@ -645,10 +734,9 @@ public class AlfrescoMetadataService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
-            response.put("Subject", properties.get("sTaxGSTTariff:subject"));
+            response.put("Subject", properties.get("cm:description"));
             response.put("StaxNotificationDate", properties.get("sTaxGSTTariff:notificationDate"));
             response.put("StaxRelatedAnalysis", properties.get("sTaxGSTTariff:relatedAnalysisNew"));
-            response.put("AllKeys", properties.keySet());
             return objectMapper.writeValueAsString(response);
 
         } catch (Exception e) {
@@ -670,7 +758,7 @@ public class AlfrescoMetadataService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
-            response.put("Subject", properties.get("sTaxGSTCaseLaws:gstSubject"));
+            response.put("Subject", properties.get("sTaxGSTCaseLaws:subject"));
             response.put("States", properties.get("sTaxGSTCaseLaws:states"));
             response.put("counselAppeared", properties.get("sTaxGSTCaseLaws:counselAppeared"));
             response.put("decisionInFavourOf", properties.get("sTaxGSTCaseLaws:decisionInFavourOf"));
@@ -698,6 +786,9 @@ public class AlfrescoMetadataService {
             response.put("gstServices", properties.get("sTaxGSTCaseLaws:gstServices"));
             response.put("gstIndustries", properties.get("sTaxGSTCaseLaws:gstIndustries"));
             response.put("gstGoods", properties.get("sTaxGSTCaseLaws:gstGoods"));
+            response.put("catchWord", properties.get("sTaxGSTCaseLaws:catchWord"));
+            response.put("conclusion", properties.get("sTaxGSTCaseLaws:conclusion"));
+            response.put("inFavourOf", properties.get("sTaxGSTCaseLaws:inFavourOf"));
             return objectMapper.writeValueAsString(response);
 
         } catch (Exception e) {
@@ -707,6 +798,58 @@ public class AlfrescoMetadataService {
               "error": "Failed to fetch GST Case Laws summary"
             }
             """;
+        }
+    }
+
+    private String getLessStCaseLawsMetaData(Map<String, Object> fullMetadata, String nodeId) {
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("Subject", properties.get("sTaxCaseLaws:stSubject"));
+            response.put("counselAppeared", properties.get("sTaxCaseLaws:counselAppeared"));
+            response.put("decisionInFavourOf", properties.get("sTaxCaseLaws:decisionInFavourOf"));
+            response.put("casePertainsTo", properties.get("sTaxCaseLaws:casePertainsTo"));
+            response.put("NotificationsReferredTo", properties.get("sTaxCaseLaws:NotificationsReferredTo"));
+            response.put("CircularsReferredTo", properties.get("sTaxCaseLaws:CircularsReferredTo"));
+            response.put("legislationReferredTo", properties.get("sTaxCaseLaws:legislationReferredTo"));
+            response.put("equivalentCitation", properties.get("sTaxCaseLaws:equivalentCitation"));
+            response.put("cchCitation", properties.get("sTaxCaseLaws:cchCitation"));
+            response.put("caseLawsDate", properties.get("sTaxCaseLaws:caseLawsDate"));
+            response.put("sections", properties.get("sTaxCaseLaws:sections"));
+            response.put("backwardReference", properties.get("sTaxCaseLaws:backwardReference"));
+            response.put("forwardReference", properties.get("sTaxCaseLaws:forwardReference"));
+            response.put("pnID", properties.get("sTaxCaseLaws:pnID"));
+            response.put("caseNumber", properties.get("sTaxCaseLaws:caseNumber"));
+            response.put("judge", properties.get("sTaxCaseLaws:judge"));
+            response.put("specialBenchname", properties.get("sTaxCaseLaws:specialBenchname"));
+            response.put("benchName", properties.get("sTaxCaseLaws:benchName"));
+            response.put("court", properties.get("sTaxCaseLaws:court"));
+            response.put("respondant", properties.get("sTaxCaseLaws:respondant"));
+            response.put("appellant", properties.get("sTaxCaseLaws:appellant"));
+            response.put("caseReferredTo", properties.get("sTaxCaseLaws:caseReferredTo"));
+            response.put("pronouncedByJudge", properties.get("sTaxCaseLaws:pronouncedByJudge"));
+            response.put("pronouncedByOthers", properties.get("sTaxCaseLaws:pronouncedByOthers"));
+            response.put("serviceCategory", properties.get("sTaxCaseLaws:serviceCategory"));
+            response.put("landmarkCases", properties.get("sTaxCaseLaws:landmarkCases"));
+            response.put("notificationReferredTo", properties.get("sTaxCaseLaws:notificationReferredTo"));
+            response.put("circularReferredTo", properties.get("sTaxCaseLaws:circularReferredTo"));
+            response.put("rules", properties.get("sTaxCaseLaws:rules"));
+            response.put("catchWord", properties.get("sTaxCaseLaws:catchWord"));
+            response.put("conclusion", properties.get("sTaxCaseLaws:conclusion"));
+            response.put("inFavourOf", properties.get("sTaxCaseLaws:inFavourOf"));
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+        {
+          "error": "Failed to fetch ST Case Laws summary"
+        }
+        """;
         }
     }
 
@@ -720,8 +863,19 @@ public class AlfrescoMetadataService {
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
             response.put("Subject", properties.get("cm:description"));
-            response.put("StaxNotificationDate", properties.get("sTaxGSTPressReleases:sTaxGSTPressReleasesDate"));
-
+            response.put("pnID", properties.get("sTaxGSTProposedLegislations:pnID"));
+            response.put("chapterNo", properties.get("sTaxGSTProposedLegislations:chapterNo"));
+            response.put("chapterBody", properties.get("sTaxGSTProposedLegislations:chapterBody"));
+            response.put("chapterName", properties.get("sTaxGSTProposedLegislations:chapterName"));
+            response.put("sectionNoHTML", properties.get("sTaxGSTProposedLegislations:sectionNoHTML"));
+            response.put("sectionNo", properties.get("sTaxGSTProposedLegislations:sectionNo"));
+            response.put("sectionName", properties.get("sTaxGSTProposedLegislations:sectionName"));
+            response.put("sectionNameHTML", properties.get("sTaxGSTProposedLegislations:sectionNameHTML"));
+            response.put("subSectionNo", properties.get("sTaxGSTProposedLegislations:subSectionNo"));
+            response.put("NotificationList", properties.get("sTaxGSTProposedLegislations:NotificationList"));
+            response.put("subSectionBody", properties.get("sTaxGSTProposedLegislations:subSectionBody"));
+            response.put("NotificationListHTML", properties.get("sTaxGSTProposedLegislations:NotificationListHTML"));
+            response.put("subSectionNoHTML", properties.get("sTaxGSTProposedLegislations:subSectionNoHTML"));
             return objectMapper.writeValueAsString(response);
 
         } catch (Exception e) {
@@ -742,8 +896,21 @@ public class AlfrescoMetadataService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
-            response.put("Subject", properties.get("sTaxGSTPressReleases:subject"));
-            response.put("StaxNotificationDate", properties.get("sTaxRule:ruleDate"));
+            response.put("Subject", properties.get("cm:description"));
+            response.put("pnID", properties.get("sTaxRule:pnID"));
+            response.put("chapterNo", properties.get("sTaxRule:chapterNo"));
+            response.put("chapterBody", properties.get("sTaxRule:chapterBody"));
+            response.put("chapterName", properties.get("sTaxRule:chapterName"));
+            response.put("chapterNameHTML", properties.get("sTaxRule:chapterName"));
+            response.put("ruleNameHTML", properties.get("sTaxRule:ruleNameHTML"));
+            response.put("ruleBody", properties.get("sTaxRule:ruleBody"));
+            response.put("ruleName", properties.get("sTaxRule:ruleName"));
+            response.put("ruleNoHTML", properties.get("sTaxRule:ruleNoHTML"));
+            response.put("ruleNo", properties.get("sTaxRule:ruleNo"));
+            response.put("NotificationList", properties.get("sTaxRule:NotificationList"));
+            response.put("subSectionBody", properties.get("sTaxRule:subSectionBody"));
+            response.put("NotificationListHTML", properties.get("sTaxRule:NotificationListHTML"));
+            response.put("subSectionNoHTML", properties.get("sTaxRule:subSectionNoHTML"));
 
             return objectMapper.writeValueAsString(response);
 
@@ -788,8 +955,20 @@ public class AlfrescoMetadataService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
-            response.put("Subject", properties.get("sTaxGSTPressReleases:subject"));
-            response.put("StaxNotificationDate", properties.get("sTaxRule:ruleDate"));
+            response.put("Description", properties.get("cm:description"));
+            response.put("sTaxDate", properties.get("sTaxRule:sTaxDate"));
+            response.put("states", properties.get("sTaxRule:states"));
+            response.put("descriptionHTML", properties.get("sTaxRule:descriptionHTML"));
+            response.put("referenceNumber", properties.get("sTaxRule:referenceNumber"));
+            response.put("pnID", properties.get("sTaxRule:pnID"));
+            response.put("chapterNameHTML", properties.get("sTaxRule:chapterNameHTML"));
+            response.put("chapterBody", properties.get("sTaxRule:chapterBody"));
+            response.put("chapterName", properties.get("sTaxRule:chapterName"));
+            response.put("ruleBody", properties.get("sTaxRule:ruleBody"));
+            response.put("ruleNameHTML", properties.get("sTaxRule:ruleNameHTML"));
+            response.put("ruleName", properties.get("sTaxRule:ruleName"));
+            response.put("ruleNoHTML", properties.get("sTaxRule:ruleNoHTML"));
+            response.put("ruleNo", properties.get("sTaxRule:ruleNo"));
 
             return objectMapper.writeValueAsString(response);
 
@@ -811,9 +990,23 @@ public class AlfrescoMetadataService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
-            response.put("Description", properties.get("cm:description"));;
-            response.put("StaxNotificationDate", properties.get("sTaxGSTProposedLegislations:sTaxDate"));
-
+            response.put("Description", properties.get("cm:description"));
+            response.put("sTaxDate", properties.get("sTaxGSTProposedLegislations:sTaxDate"));
+            response.put("states", properties.get("sTaxGSTProposedLegislations:states"));
+            response.put("sTaxActNo", properties.get("sTaxGSTProposedLegislations:sTaxActNo"));
+            response.put("pnID", properties.get("sTaxGSTProposedLegislations:pnID"));
+            response.put("chapterNo", properties.get("sTaxGSTProposedLegislations:chapterNo"));
+            response.put("chapterBody", properties.get("sTaxGSTProposedLegislations:chapterBody"));
+            response.put("chapterName", properties.get("sTaxGSTProposedLegislations:chapterName"));
+            response.put("sectionNoHTML", properties.get("sTaxGSTProposedLegislations:sectionNoHTML"));
+            response.put("sectionNo", properties.get("sTaxGSTProposedLegislations:sectionNo"));
+            response.put("sectionName", properties.get("sTaxGSTProposedLegislations:sectionName"));
+            response.put("sectionNameHTML", properties.get("sTaxGSTProposedLegislations:sectionNameHTML"));
+            response.put("subSectionNo", properties.get("sTaxGSTProposedLegislations:subSectionNo"));
+            response.put("NotificationList", properties.get("sTaxGSTProposedLegislations:NotificationList"));
+            response.put("subSectionBody", properties.get("sTaxGSTProposedLegislations:subSectionBody"));
+            response.put("NotificationListHTML", properties.get("sTaxGSTProposedLegislations:NotificationListHTML"));
+            response.put("subSectionNoHTML", properties.get("sTaxGSTProposedLegislations:subSectionNoHTML"));
             return objectMapper.writeValueAsString(response);
 
         } catch (Exception e) {
@@ -837,6 +1030,13 @@ public class AlfrescoMetadataService {
             response.put("Description", properties.get("cm:description"));;
             response.put("Date", properties.get("sTaxSTAct:ruleDate"));
             response.put("States", properties.get("sTaxSTAct:states"));
+            response.put("chapterBody", properties.get("sTaxSTAct:chapterBody"));
+            response.put("chapterNameHTML", properties.get("sTaxSTAct:chapterNameHTML"));
+            response.put("chapterName", properties.get("sTaxSTAct:chapterName"));
+            response.put("ruleBody", properties.get("sTaxSTAct:ruleBody"));
+            response.put("ruleNameHTML", properties.get("sTaxSTAct:ruleNameHTML"));
+            response.put("ruleName", properties.get("sTaxSTAct:ruleName"));
+            response.put("ruleNoHTML", properties.get("sTaxSTAct:ruleNoHTML"));
 
             return objectMapper.writeValueAsString(response);
 
@@ -858,8 +1058,17 @@ public class AlfrescoMetadataService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
-            response.put("Subject", properties.get("sTaxGSTPressReleases:subject"));
-            response.put("StaxNotificationDate", properties.get("sTaxRule:ruleDate"));
+            response.put("Description", properties.get("cm:description"));
+            response.put("Subject", properties.get("sTaxSTRule:subject"));
+            response.put("ruleDate", properties.get("sTaxRule:ruleDate"));
+            response.put("States", properties.get("sTaxSTRule:states"));
+            response.put("chapterBody", properties.get("sTaxSTRule:chapterBody"));
+            response.put("chapterNameHTML", properties.get("sTaxSTRule:chapterNameHTML"));
+            response.put("chapterName", properties.get("sTaxSTRule:chapterName"));
+            response.put("ruleBody", properties.get("sTaxSTRule:ruleBody"));
+            response.put("ruleNameHTML", properties.get("sTaxSTRule:ruleNameHTML"));
+            response.put("ruleName", properties.get("sTaxSTRule:ruleName"));
+            response.put("ruleNoHTML", properties.get("sTaxSTRule:ruleNoHTML"));
 
             return objectMapper.writeValueAsString(response);
 
@@ -902,8 +1111,15 @@ public class AlfrescoMetadataService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
-            response.put("Subject", properties.get("sTaxFinanceAct:year"));
-            response.put("StaxNotificationDate", properties.get("sTaxFinanceAct:date"));
+            response.put("sTaxFinanceActYear", properties.get("sTaxFinanceAct:year"));
+            response.put("sTaxFinanceActDate", properties.get("sTaxFinanceAct:date"));
+            response.put("chapterBody", properties.get("sTaxFinanceAct:chapterBody"));
+            response.put("chapterName", properties.get("sTaxFinanceAct:chapterName"));
+            response.put("clausePnID", properties.get("sTaxFinanceAct:clausePnID"));
+            response.put("clauseNo", properties.get("sTaxFinanceAct:clauseNo"));
+            response.put("clauseName", properties.get("sTaxFinanceAct:clauseName"));
+            response.put("clauseBody", properties.get("sTaxFinanceAct:clauseBody"));
+
 
             return objectMapper.writeValueAsString(response);
 
@@ -928,6 +1144,13 @@ public class AlfrescoMetadataService {
             response.put("Description", properties.get("cm:description"));
             response.put("Date", properties.get("sTaxCRRule:ruleDate"));
             response.put("State", properties.get("sTaxCRRule:states"));
+            response.put("chapterNameHTML", properties.get("sTaxCRRule:chapterNameHTML"));
+            response.put("chapterName", properties.get("sTaxCRRule:chapterName"));
+            response.put("chapterBody", properties.get("sTaxCRRule:chapterBody"));
+            response.put("ruleBody", properties.get("sTaxCRRule:ruleBody"));
+            response.put("ruleNameHTML", properties.get("sTaxCRRule:ruleNameHTML"));
+            response.put("ruleNoHTML", properties.get("sTaxCRRule:ruleNoHTML"));
+            response.put("ruleName", properties.get("sTaxCRRule:ruleName"));
 
             return objectMapper.writeValueAsString(response);
 
@@ -949,8 +1172,13 @@ public class AlfrescoMetadataService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
+            response.put("description", properties.get("cm:description"));
             response.put("Date", properties.get("sTaxTSERule:ruleDate"));
             response.put("States", properties.get("sTaxTSERule:states"));
+            response.put("ruleBody", properties.get("sTaxTSERule:ruleBody"));
+            response.put("ruleNoHTML", properties.get("sTaxTSERule:ruleNoHTML"));
+            response.put("ruleNameHTML", properties.get("sTaxTSERule:ruleNameHTML"));
+            response.put("ruleName", properties.get("sTaxTSERule:ruleName"));
 
             return objectMapper.writeValueAsString(response);
 
@@ -974,7 +1202,11 @@ public class AlfrescoMetadataService {
             response.put("Title", properties.get("cm:title"));
             response.put("Category", properties.get("dTaxForms:formCategory"));
             response.put("FormNo", properties.get("dTaxForms:formNo"));
-            response.put("Description", properties.get("cm:description"));
+            response.put("Description", properties.get("dTaxForms:description"));
+            response.put("formDesc", properties.get("dTaxForms:formDesc"));
+            response.put("formNo", properties.get("dTaxForms:formNo"));
+            response.put("pnID", properties.get("dTaxForms:pnID"));
+            response.put("formCategory", properties.get("dTaxForms:formCategory"));
 
             return objectMapper.writeValueAsString(response);
 
@@ -987,6 +1219,141 @@ public class AlfrescoMetadataService {
                 """;
         }
     }
+
+    private String getLessGstCouncilMeetingMetaData(
+            Map<String, Object> fullMetadata,
+            String nodeId) {
+
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("publicationDate", properties.get("ifrmArticle:publicationDate"));
+            response.put("citation", properties.get("ifrmArticle:citation"));
+            response.put("description", properties.get("cm:description"));
+            response.put("pnID", properties.get("ifrmArticle:pnID"));
+            response.put("subject", properties.get("ifrmArticle:subject"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+                {
+                  "error": "Failed to fetch GstCouncilMeeting summary"
+                }
+                """;
+        }
+    }
+
+
+    private String getLessReadyReckonerServiceMetaData(
+            Map<String, Object> fullMetadata,
+            String nodeId) {
+
+        try {
+            Map<String, Object> properties = (Map<String, Object>) fullMetadata.get("properties");
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("citation", properties.get("sTaxReadyReckoner:citation"));
+            response.put("description", properties.get("cm:description"));
+            response.put("pnID", properties.get("sTaxReadyReckoner:pnID"));
+            response.put("subject", properties.get("sTaxReadyReckoner:subject"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+            {
+              "error": "Failed to fetch ReadyReckonerServicetax summary"
+            }
+            """;
+        }
+    }
+
+
+    private String getLessReadyReckonerGoodsServiceMetaData(
+            Map<String, Object> fullMetadata,
+            String nodeId) {
+
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("citation", properties.get("sTaxEAnalysis:citation"));
+            response.put("description", properties.get("cm:description"));
+            response.put("pnID", properties.get("sTaxEAnalysis:pnID"));
+            response.put("author", properties.get("sTaxEAnalysis:author"));
+            response.put("topicContent", properties.get("sTaxEAnalysis:topicContent"));
+            response.put("topicPnID", properties.get("sTaxEAnalysis:topicPnID"));
+            response.put("topicName", properties.get("sTaxEAnalysis:topicName"));
+            response.put("published", properties.get("sTaxEAnalysis:published"));
+            response.put("topicNameHTML", properties.get("sTaxEAnalysis:topicNameHTML"));
+            response.put("subTopicName", properties.get("sTaxEAnalysis:subTopicName"));
+            response.put("subTopicNameHTML", properties.get("sTaxEAnalysis:subTopicNameHTML"));
+            response.put("subtopicContent", properties.get("sTaxEAnalysis:subtopicContent"));
+            response.put("subject", properties.get("sTaxEAnalysis:subject"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+        {
+          "error": "Failed to fetch ReadyReckonerGoodsService summary"
+        }
+        """;
+        }
+    }
+
+
+
+    private String getLessGstCommentaryMetaData(
+            Map<String, Object> fullMetadata,
+            String nodeId) {
+
+        try {
+            Map<String, Object> properties =
+                    (Map<String, Object>) fullMetadata.get("properties");
+
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("NodeId", nodeId);
+            response.put("Title", properties.get("cm:title"));
+            response.put("citation", properties.get("sTaxEAnalysis:citation"));
+            response.put("description", properties.get("cm:description"));
+            response.put("pnID", properties.get("sTaxEAnalysis:pnID"));
+            response.put("author", properties.get("sTaxEAnalysis:author"));
+            response.put("topicContent", properties.get("sTaxEAnalysis:topicContent"));
+            response.put("topicPnID", properties.get("sTaxEAnalysis:topicPnID"));
+            response.put("topicName", properties.get("sTaxEAnalysis:topicName"));
+            response.put("published", properties.get("sTaxEAnalysis:published"));
+            response.put("topicNameHTML", properties.get("sTaxEAnalysis:topicNameHTML"));
+            response.put("subTopicName", properties.get("sTaxEAnalysis:subTopicName"));
+            response.put("subTopicNameHTML", properties.get("sTaxEAnalysis:subTopicNameHTML"));
+            response.put("subtopicContent", properties.get("sTaxEAnalysis:subtopicContent"));
+            response.put("subject", properties.get("sTaxEAnalysis:subject"));
+
+            return objectMapper.writeValueAsString(response);
+
+        } catch (Exception e) {
+            log.error("exception", e);
+            return """
+        {
+          "error": "Failed to fetch GstCommentary summary"
+        }
+        """;
+        }
+    }
+
+
 
     private String getLessGstExpertsAnalysisMetaData(Map<String, Object> fullMetadata, String nodeId) {
         try {
@@ -1067,8 +1434,14 @@ public class AlfrescoMetadataService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
+            response.put("description", properties.get("cm:description"));
             response.put("Commentary Section", properties.get("sTaxComm:sTaxCommSection"));
             response.put("Commentary Chapter", properties.get("sTaxComm:chapter"));
+            response.put("docSummery", properties.get("sTaxComm:docSummery"));
+            response.put("pnID", properties.get("sTaxComm:pnID"));
+            response.put("topicPnID", properties.get("sTaxComm:topicPnID"));
+            response.put("topicName", properties.get("sTaxComm:topicName"));
+            response.put("topicContent", properties.get("sTaxComm:topicContent"));
 
             return objectMapper.writeValueAsString(response);
 
@@ -1113,8 +1486,13 @@ public class AlfrescoMetadataService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
-            response.put("Subject", properties.get("sTaxNotification:subject"));
-            response.put("StaxNotificationDate", properties.get("sTaxNotification:sTaxNotificationDate"));
+            response.put("Subject", properties.get("sTaxQuestionAnswer:subject"));
+            response.put("description", properties.get("cm:description"));
+            response.put("pnID", properties.get("sTaxQuestionAnswer:pnID"));
+            response.put("questionNo", properties.get("sTaxQuestionAnswer:questionNo"));
+            response.put("ChapterName", properties.get("sTaxQuestionAnswer:ChapterName"));
+
+            response.put("sTaxQuestionAnswerDate", properties.get("sTaxQuestionAnswer:sTaxNotificationDate"));
 
             return objectMapper.writeValueAsString(response);
 
@@ -1136,8 +1514,17 @@ public class AlfrescoMetadataService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
-            response.put("Subject", properties.get("sTaxNotification:subject"));
-            response.put("StaxNotificationDate", properties.get("sTaxNotification:sTaxNotificationDate"));
+            response.put("description", properties.get("cm:description"));
+            response.put("Subject", properties.get("sTaxVATEAnalysis:subject"));
+            response.put("sTaxVATEAnalysisDate", properties.get("sTaxVATEAnalysis:sTaxVATEAnalysisDate"));
+            response.put("pnID", properties.get("sTaxVATEAnalysis:pnID"));
+            response.put("author", properties.get("sTaxVATEAnalysis:author"));
+            response.put("topicPnID", properties.get("sTaxVATEAnalysis:topicPnID"));
+            response.put("topicName", properties.get("sTaxVATEAnalysis:topicName"));
+            response.put("topicNameHTML", properties.get("sTaxVATEAnalysis:topicNameHTML"));
+            response.put("topicContent", properties.get("sTaxVATEAnalysis:topicContent"));
+
+
 
             return objectMapper.writeValueAsString(response);
 
@@ -1159,8 +1546,20 @@ public class AlfrescoMetadataService {
             Map<String, Object> response = new LinkedHashMap<>();
             response.put("NodeId", nodeId);
             response.put("Title", properties.get("cm:title"));
-            response.put("Subject", properties.get("sTaxNotification:subject"));
-            response.put("StaxNotificationDate", properties.get("sTaxNotification:sTaxNotificationDate"));
+            response.put("description", properties.get("cm:description"));
+            response.put("Subject", properties.get("sTaxSTEAnalysis:subject"));
+            response.put("sTaxSTEAnalysisDate", properties.get("sTaxSTEAnalysis:date"));
+            response.put("pnID", properties.get("sTaxSTEAnalysis:pnID"));
+            response.put("author", properties.get("sTaxSTEAnalysis:date"));
+            response.put("commentaryType", properties.get("sTaxSTEAnalysis:commentaryType"));
+            response.put("topicPnID", properties.get("sTaxSTEAnalysis:topicPnID"));
+            response.put("topicNameHTML", properties.get("sTaxSTEAnalysis:topicNameHTML"));
+            response.put("topicName", properties.get("sTaxSTEAnalysis:topicName"));
+            response.put("topicContent", properties.get("sTaxSTEAnalysis:topicContent"));
+            response.put("subTopicName", properties.get("sTaxSTEAnalysis:subTopicName"));
+            response.put("subTopicContent", properties.get("sTaxSTEAnalysis:subTopicContent"));
+            response.put("published", properties.get("sTaxSTEAnalysis:published"));
+            response.put("subTopicNameHTML", properties.get("sTaxSTEAnalysis:subTopicNameHTML"));
 
             return objectMapper.writeValueAsString(response);
 
@@ -1258,7 +1657,7 @@ public class AlfrescoMetadataService {
             result.put("creationDate", properties.get("cmis:creationDate"));
             result.put("lastModificationDate", properties.get("cmis:lastModificationDate"));
             result.put("mimeType", properties.get("cmis:contentStreamMimeType"));
-            result.put("size", properties.get("cmis:contentStreamLength"));
+            result.put("", properties.get("cmis:contentStreamLength"));
             result.put("version", properties.get("cmis:versionLabel"));
 
             return result;

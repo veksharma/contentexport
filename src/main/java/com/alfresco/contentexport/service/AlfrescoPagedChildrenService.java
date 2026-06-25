@@ -37,11 +37,11 @@ public class AlfrescoPagedChildrenService {
         }
 
         if (size < 1) {
-            size = 10;
+            size = 1000;
         }
 
-        if (size > 200) {
-            size = 200;
+        if (size > 1000) {
+            size = 1000;
         }
 
         int skipCount = page * size;
@@ -52,7 +52,7 @@ public class AlfrescoPagedChildrenService {
                 .path(folderNodeId)
                 .path("/children")
                 .queryParam("maxItems", size)
-                .queryParam("skipCount", skipCount)
+                .queryParam("skipCount", page)
                 .build()
                 .toUriString();
 

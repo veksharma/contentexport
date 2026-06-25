@@ -225,14 +225,6 @@ public class AlfrescoClient {
     }
 
 
-
-
-
-
-
-
-
-
     public ResponseEntity<DocListResponse> getFolderChildrenList(String folderNodeId) {
         log.info("Fetching folder doc list for folderNodeId={}", folderNodeId);
         String url = properties.getBaseUrl()

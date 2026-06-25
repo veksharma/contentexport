@@ -26,17 +26,17 @@ public class AlfrescoPagedDoclibService {
         this.restTemplate = restTemplate;
     }
 
-    public String getPagedChildren(String folderNodeId, int page, int size) {
+    public String getPagedChildren(String folderNodeId, int page, int size ) {
         if (page < 0) {
             page = 0;
         }
 
         if (size < 1) {
-            size = 100;
+            size = 2000;
         }
 
-        if (size > 500) {
-            size = 500;
+        if (size > 2000) {
+            size = 2000;
         }
 
         int skip = page * size;
